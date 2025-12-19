@@ -1,0 +1,39 @@
+{
+  "customer_phone": "+33615785152",
+  "customer_name": "Regis amichia",
+  "customer_address": "20 Rue Saint-Ambroise, Paris, 75011PARIS",
+  "restaurant_name": "Le Pain Quotidien a reçu votre commande !  | L'email ne s'affiche pas correctement ? Cliquez ici.",
+  "restaurant_address": "Le Pain Quotidien, 8 Rue de Bretagne, Paris",
+  "restaurant_phone": "75003",
+  "order_number": "2662",
+  "items": [
+    {
+      "quantity": "1x",
+      "name": "Tartine Jambon Fumé & Mozzarella di Bufala D.O.P bio",
+      "options": [
+        "Pain de blé bio",
+        "7,90 €",
+        "1x",
+        "Petit-déjeuner 1 personne",
+        "Pain au chocolat bio",
+        "Jus d'Orange Frais",
+        "10,40 €",
+        "1x",
+        "Petit-déjeuner 1 personne",
+        "Croissant bio",
+        "Jus de Pamplemousse Frais",
+        "10,40 €",
+        "1x",
+        "Mini salade lentilles au paprika fumé (100% végétarien)"
+      ],
+      "price": "4,50 €"
+    }
+  ],
+  "subtotal": "€33.20",
+  "delivery_fee": "€3.19",
+  "tip": "€0.00",
+  "credit": "€0.00",
+  "total": "€36.39",
+  "delivery_person_phone": "+33970734230",
+  "order_date": "Fri_01_Nov_2019_12_00_40"
+}
