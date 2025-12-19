@@ -377,23 +377,3 @@ This approach enables the client to:
 - derive actionable insights despite incomplete historical data.
 
 By combining a clear approximation rule, scalable logic, and strong data quality checks, we provide a solution that is both pragmatic and trustworthy for decision-making.
-
----
-
-## 9) Conclusion
-
-This project demonstrates how subscription periods can be reconstructed from transactional data alone by combining:
-- temporal segmentation,
-- window functions,
-- block-level aggregation,
-- explicit business rules,
-- scalable parameters,
-- and systematic validation through TDD.
-
-**Key takeaways:**
-- We chose a step-by-step approach for clarity and maintainability.
-- Each step builds logically on the previous one.
-- The logic is transparent, explainable, and auditable.
-- The output is immediately usable for business analysis.
-
-The resulting pipeline is modular, scalable, fully SQL-based, and suitable for both analytical and managerial use cases.
