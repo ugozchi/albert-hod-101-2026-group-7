@@ -1,4 +1,24 @@
-# Deliveroo Plus — Subscription Tagging (SQL Only)
+# Deliveroo Plus : Subscription Tagging (SQL Only)
+
+## File Structure
+
+```
+BigQuery/Querys/Queries/
+├── table_creation.sql                          # Step 0
+├── Step1_Subscription_block_detection.sql    # Step 1
+├── Step2_block_level_aggregation.sql          # Step 2
+├── Step3_Subscription_tagging.sql            # Step 3
+├── Step4.1_quick_use_case_answer.sql         # Step 4.1
+├── Step4.2_quick_user_case_answer.sql         # Step 4.2
+├── Scalability_query.sql                      # Scalability version
+├── Checking_query.sql                         # Validation queries
+├── TDD1_never_subscribed_if_delivery_is_chargeable.sql
+├── TDD2_if_subscribed_then_start_end_not_NULL.sql
+├── TDD3_if_subscribed_datetime_in_[start, end].sql
+└── TDD4_Strict_consistency_threshold_=_block_stats.sql
+```
+
+---
 
 ## 1) Project Objective
 
@@ -81,9 +101,9 @@ These tables make the logic transparent and debuggable, instead of hiding all tr
 
 ---
 
-## 5) Step-by-Step Implementation
+## 5) Implementation
 
-### 5.1) Step 0 — Order History Preparation
+### Step 0) Order History Preparation
 
 **Query file:** `table_creation.sql`  
 **Output table:** `tmp_deliveroo_ordered`
@@ -104,7 +124,7 @@ A table with the same structure as the source, plus a `prev_is_free_delivery` co
 
 ---
 
-### 5.2) Step 1 — Subscription Block Detection
+### Step 1) Subscription Block Detection
 
 **Query file:** `Step1_Subscription_block_detection.sql`  
 **Output table:** `tmp_deliveroo_blocks`
@@ -130,7 +150,7 @@ A table where each order has a `block_id`. For a given customer, `block_id` will
 
 ---
 
-### 5.3) Step 2 — Block-Level Aggregation
+### Step 2) Block-Level Aggregation
 
 **Query file:** `Step2_block_level_aggregation.sql`  
 **Output table:** `tmp_deliveroo_block_stats`
@@ -154,7 +174,7 @@ A table where all orders in the same block share the same `block_size`, `block_s
 
 ---
 
-### 5.4) Step 3 — Subscription Tagging
+### Step 3) Subscription Tagging
 
 **Query file:** `Step3_Subscription_tagging.sql`  
 **Output table:** `final_dataset`
@@ -189,11 +209,11 @@ A table where each order is enriched with subscription information. Orders in qu
 
 ---
 
-### 5.5) Step 4 — Visual Enrichment
+### Step 4) Visual Enrichment
 
 After identifying subscription periods (Steps 1-3), we introduced an additional step to make the final dataset more readable and business-friendly. This step does not alter the subscription logic; it enhances interpretability.
 
-#### 5.5.1) Step 4.1 — Subscription Phase Classification
+#### -> Step 4.1) Subscription Phase Classification
 
 **Query file:** `Step4.1_quick_use_case_answer.sql`
 
@@ -216,7 +236,7 @@ Managers and analysts need to understand customer behavior relative to subscript
 **Expected result:**
 A categorical column that immediately shows where each order falls in the customer's subscription lifecycle.
 
-#### 5.5.2) Step 4.2 — Subscription Timeline Indicator
+#### -> Step 4.2) Subscription Timeline Indicator
 
 **Query file:** `Step4.2_quick_user_case_answer.sql`
 
@@ -266,7 +286,7 @@ To ensure the correctness and robustness of the tagging logic, we implemented se
 **Our TDD approach:**
 Each test is written as a SQL query expected to return **zero rows** if the logic is correct. If a test returns any rows, it indicates a logical inconsistency that needs to be fixed.
 
-### 7.1) Test 1 — Paid Deliveries Cannot Be Subscriptions
+### Test 1) Paid Deliveries Cannot Be Subscriptions
 
 **Query file:** `TDD1_never_subscribed_if_delivery_is_chargeable.sql`
 
@@ -276,7 +296,7 @@ Orders with `is_free_delivery = 0` cannot be tagged as subscription orders.
 **Why this matters:**
 This is a fundamental business rule: if the customer paid for delivery, they cannot be considered subscribed.
 
-### 7.2) Test 2 — Subscription Orders Must Have Start/End Dates
+### Test 2) Subscription Orders Must Have Start/End Dates
 
 **Query file:** `TDD2_if_subscribed_then_start_end_not_NULL.sql`
 
@@ -286,7 +306,7 @@ If an order is tagged as `is_order_made_during_subscription = 1`, then both `cur
 **Why this matters:**
 Subscription periods must have well-defined boundaries. Missing dates would indicate a logic error.
 
-### 7.3) Test 3 — Order Datetime Must Be Within Subscription Period
+### Test 3) Order Datetime Must Be Within Subscription Period
 
 **Query file:** `TDD3_if_subscribed_datetime_in_[start, end].sql`
 
@@ -296,7 +316,7 @@ For subscription orders, the `order_datetime_synth` must fall between `current_s
 **Why this matters:**
 This ensures temporal consistency: an order cannot be tagged as "during subscription" if it falls outside the subscription period.
 
-### 7.4) Test 4 — Strict Consistency with Block Statistics
+### Test 4) Strict Consistency with Block Statistics
 
 **Query file:** `TDD4_Strict_consistency_threshold_=_block_stats.sql`
 
@@ -377,40 +397,3 @@ This project demonstrates how subscription periods can be reconstructed from tra
 - The output is immediately usable for business analysis.
 
 The resulting pipeline is modular, scalable, fully SQL-based, and suitable for both analytical and managerial use cases.
-
----
-
-## 10) File Structure
-
-```
-BigQuery/Querys/Queries/
-├── table_creation.sql                          # Step 0
-├── Step1_Subscription_block_detection.sql    # Step 1
-├── Step2_block_level_aggregation.sql          # Step 2
-├── Step3_Subscription_tagging.sql            # Step 3
-├── Step4.1_quick_use_case_answer.sql         # Step 4.1
-├── Step4.2_quick_user_case_answer.sql         # Step 4.2
-├── Scalability_query.sql                      # Scalability version
-├── Checking_query.sql                         # Validation queries
-├── TDD1_never_subscribed_if_delivery_is_chargeable.sql
-├── TDD2_if_subscribed_then_start_end_not_NULL.sql
-├── TDD3_if_subscribed_datetime_in_[start, end].sql
-└── TDD4_Strict_consistency_threshold_=_block_stats.sql
-```
-
----
-
-## 11) Usage
-
-To execute the pipeline:
-
-1. Run `table_creation.sql` to create `tmp_deliveroo_ordered`.
-2. Run `Step1_Subscription_block_detection.sql` to create `tmp_deliveroo_blocks`.
-3. Run `Step2_block_level_aggregation.sql` to create `tmp_deliveroo_block_stats`.
-4. Run `Step3_Subscription_tagging.sql` to create `final_dataset`.
-5. (Optional) Run `Step4.1_quick_use_case_answer.sql` and `Step4.2_quick_user_case_answer.sql` for visual enhancements.
-6. Run the TDD queries to validate the logic.
-
-To change the threshold:
-- Modify the `subscription_threshold` value in `Scalability_query.sql` or in Step 3.
-
