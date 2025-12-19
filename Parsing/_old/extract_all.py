@@ -12,7 +12,7 @@ data = {}
 customer_phone = re.search(r'\+33\s*6\s*\d{2}\s*\d{2}\s*\d{2}\s*\d{2}', html)
 data['customer_phone'] = customer_phone.group().replace(' ', '') if customer_phone else None
 
-# Extract customer info (right side of the layout)
+# Extract customer info
 all_paragraphs = soup.find_all('p')
 customer_info = []
 for i, p in enumerate(all_paragraphs):
