@@ -10,6 +10,7 @@ The approach relies on deterministic HTML parsing using Python and BeautifulSoup
 
 ## Repository Structure
 Parsing/
+
 ├── extract_all_mails.py        # Core extraction and parsing logic  
 ├── bonus.py                   # Optional post-processing and enrichment  
 ├── all_deliveroo_orders.json  # Parsed food delivery order dataset  
