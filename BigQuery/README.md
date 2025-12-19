@@ -4,14 +4,14 @@
 
 ```
 BigQuery/Querys/Queries/
-├── table_creation.sql                          # Step 0
+├── table_creation.sql                        # Step 0
 ├── Step1_Subscription_block_detection.sql    # Step 1
-├── Step2_block_level_aggregation.sql          # Step 2
+├── Step2_block_level_aggregation.sql         # Step 2
 ├── Step3_Subscription_tagging.sql            # Step 3
 ├── Step4.1_quick_use_case_answer.sql         # Step 4.1
-├── Step4.2_quick_user_case_answer.sql         # Step 4.2
-├── Scalability_query.sql                      # Scalability version
-├── Checking_query.sql                         # Validation queries
+├── Step4.2_quick_user_case_answer.sql        # Step 4.2
+├── Scalability_query.sql                     # Scalability version
+├── Checking_query.sql                        # Validation queries
 ├── TDD1_never_subscribed_if_delivery_is_chargeable.sql
 ├── TDD2_if_subscribed_then_start_end_not_NULL.sql
 ├── TDD3_if_subscribed_datetime_in_[start, end].sql
