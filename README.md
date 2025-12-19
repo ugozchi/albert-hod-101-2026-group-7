@@ -1,8 +1,5 @@
 # albert-hod-101-2026-group-7
 
-Student : Thomas ALAPHILIPPE
-Age : 23 y.o.
-City : Paris 
+Student : Thomas ALAPHILIPPE, Feliz, Nico, Ugo 
 
-ugo commit 
-C'ets de cette branch que l'on fait la pull request 
+Ici on fait le README global de tous ce qu'on doit rendre
