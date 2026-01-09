@@ -1,0 +1,31 @@
+# Environnement virtuel
+.venv/
+venv/
+env/
+
+# Variables d'environnement (IMPORTANT!)
+.env
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+logs/
+*.log
+
+# Données
+db/
+data/
