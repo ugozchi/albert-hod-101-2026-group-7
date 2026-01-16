@@ -114,7 +114,7 @@ def find_closest_products(query_products, all_products, tfidf_matrix, vocabulary
 if __name__ == "__main__":
     # Get the path to the CSV file
     script_dir = os.path.dirname(os.path.abspath(__file__))
-    csv_path = os.path.join(script_dir, '..', '..', 'part1', 'source', 'tf_idf.csv')
+    csv_path = os.path.join(script_dir, '..', '..', 'source', 'tf_idf.csv')
     
     # Query products
     query_products = [
@@ -176,7 +176,7 @@ if __name__ == "__main__":
         
     except FileNotFoundError:
         print(f"Error: Could not find CSV file at {csv_path}")
-        print("Please make sure the CSV file exists in part1/source/")
+        print("Please make sure the CSV file exists in source/")
     except Exception as e:
         print(f"Error: {e}")
         import traceback
