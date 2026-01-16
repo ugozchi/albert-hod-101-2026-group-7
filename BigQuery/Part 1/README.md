@@ -3,11 +3,11 @@
 ## File Structure
 
 ```
-BigQuery/Querys/Queries/
+BigQuery/Part 1/Queries/
 ├── table_creation.sql                         # Step 0
 ├── Step1_Subscription_block_detection.sql     # Step 1
 ├── Step2_block_level_aggregation.sql          # Step 2
-├── Step3_Subscription_tagging.sql             # Step 3
+├── Step3_Subscription_tagging.sql              # Step 3
 ├── Step4.1_quick_use_case_answer.sql          # Step 4.1
 ├── Step4.2_quick_user_case_answer.sql         # Step 4.2
 ├── Scalability_query.sql                      # Scalability version
