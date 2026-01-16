@@ -4,11 +4,11 @@
 
 ```
 BigQuery/Querys/Queries/
-├── table_creation.sql                          # Step 0
-├── Step1_Subscription_block_detection.sql    # Step 1
+├── table_creation.sql                         # Step 0
+├── Step1_Subscription_block_detection.sql     # Step 1
 ├── Step2_block_level_aggregation.sql          # Step 2
-├── Step3_Subscription_tagging.sql            # Step 3
-├── Step4.1_quick_use_case_answer.sql         # Step 4.1
+├── Step3_Subscription_tagging.sql             # Step 3
+├── Step4.1_quick_use_case_answer.sql          # Step 4.1
 ├── Step4.2_quick_user_case_answer.sql         # Step 4.2
 ├── Scalability_query.sql                      # Scalability version
 ├── Checking_query.sql                         # Validation queries
@@ -377,23 +377,3 @@ This approach enables the client to:
 - derive actionable insights despite incomplete historical data.
 
 By combining a clear approximation rule, scalable logic, and strong data quality checks, we provide a solution that is both pragmatic and trustworthy for decision-making.
-
----
-
-## 9) Conclusion
-
-This project demonstrates how subscription periods can be reconstructed from transactional data alone by combining:
-- temporal segmentation,
-- window functions,
-- block-level aggregation,
-- explicit business rules,
-- scalable parameters,
-- and systematic validation through TDD.
-
-**Key takeaways:**
-- We chose a step-by-step approach for clarity and maintainability.
-- Each step builds logically on the previous one.
-- The logic is transparent, explainable, and auditable.
-- The output is immediately usable for business analysis.
-
-The resulting pipeline is modular, scalable, fully SQL-based, and suitable for both analytical and managerial use cases.
