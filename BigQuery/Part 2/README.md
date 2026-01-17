@@ -4,11 +4,11 @@
 
 ```
 BigQuery/Part 2/Queries/
-├── Part_2_Full_query.sql                                    # Complete pipeline
+├── Part_2_Full_query.sql                                     # Complete pipeline
 ├── Step1_sanity_check_4_weekly_validated.sql                 # Step 1: Sanity check
 ├── Step2_Validated_weekly.sql                                # Step 2: Validated weekly tables
 ├── Step3_Most_recent_validated_weekly.sql                    # Step 3: Most recent table
-└── Step4_safe_version_validated_weekly.sql                    # Step 4: Safe version
+└── Step4_safe_version_validated_weekly.sql                   # Step 4: Safe version
 ```
 
 ---
