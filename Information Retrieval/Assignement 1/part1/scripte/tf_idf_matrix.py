@@ -166,7 +166,7 @@ if __name__ == "__main__":
     
     # Get the path to the CSV file
     script_dir = os.path.dirname(os.path.abspath(__file__))
-    csv_path = os.path.join(script_dir, '..', 'source', 'tf_idf.csv')
+    csv_path = os.path.join(script_dir, '..', '..', 'source', 'tf_idf.csv')
     
     # Read documents from CSV
     documents = []
