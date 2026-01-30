@@ -135,9 +135,9 @@ def assess_reliability(accuracy, metrics, categories):
         Assessment string
     """
     assessment = []
-    assessment.append("\n" + "=" * 80)
+    assessment.append("\n" + "=" * 100)
     assessment.append("RELIABILITY ASSESSMENT")
-    assessment.append("=" * 80)
+    assessment.append("=" * 100)
     
     # Global accuracy assessment
     if accuracy >= 0.9:
@@ -155,7 +155,7 @@ def assess_reliability(accuracy, metrics, categories):
     
     # Per-category analysis
     assessment.append("\nPer-Category Analysis:")
-    assessment.append("-" * 80)
+    assessment.append("-" * 100)
     
     poor_categories = []
     good_categories = []
@@ -180,7 +180,7 @@ def assess_reliability(accuracy, metrics, categories):
             assessment.append(f"... and {len(poor_categories) - 10} more")
     
     # Overall assessment
-    assessment.append("\n" + "-" * 80)
+    assessment.append("\n" + "-" * 100)
     if accuracy >= 0.8 and len(poor_categories) < len(categories) * 0.2:
         assessment.append("CONCLUSION: The classification system is RELIABLE ENOUGH")
         assessment.append("✓ Good global accuracy")
@@ -193,7 +193,7 @@ def assess_reliability(accuracy, metrics, categories):
         assessment.append("✗ Low accuracy and/or many categories underperform")
         assessment.append("✗ System needs significant improvement before deployment")
     
-    assessment.append("=" * 80)
+    assessment.append("=" * 100)
     
     return "\n".join(assessment)
 
@@ -204,9 +204,9 @@ if __name__ == "__main__":
     csv_path = os.path.join(script_dir, '..', 'source', 'classification_dataset_ground_truth.csv')
     output_plot_path = os.path.join(script_dir, '..', 'confusion_matrix.png')
     
-    print("=" * 80)
+    print("=" * 100)
     print("Classification System Evaluation")
-    print("=" * 80)
+    print("=" * 100)
     
     try:
         # Load data
@@ -218,21 +218,21 @@ if __name__ == "__main__":
         print(f"Categories: {', '.join(categories)}")
         
         # Compute global accuracy
-        print("\n" + "=" * 80)
+        print("\n" + "=" * 100)
         print("1. GLOBAL ACCURACY")
-        print("=" * 80)
+        print("=" * 100)
         accuracy = compute_global_accuracy(true_labels, predicted_labels)
         print(f"Global Accuracy: {accuracy:.4f} ({accuracy*100:.2f}%)")
         
         # Compute per-category metrics
-        print("\n" + "=" * 80)
+        print("\n" + "=" * 100)
         print("2. PER-CATEGORY METRICS (Precision / Recall / F1-Score)")
-        print("=" * 80)
+        print("=" * 100)
         metrics = compute_per_category_metrics(true_labels, predicted_labels, categories)
         
         # Display metrics in a table format
         print(f"\n{'Category':<30} {'Precision':<12} {'Recall':<12} {'F1-Score':<12} {'Support':<10}")
-        print("-" * 80)
+        print("-" * 100)
         for category in categories:
             prec = metrics[category]['precision']
             rec = metrics[category]['recall']
@@ -241,9 +241,9 @@ if __name__ == "__main__":
             print(f"{category[:29]:<30} {prec:<12.4f} {rec:<12.4f} {f1:<12.4f} {sup:<10}")
         
         # Build confusion matrix
-        print("\n" + "=" * 80)
+        print("\n" + "=" * 100)
         print("3. CONFUSION MATRIX")
-        print("=" * 80)
+        print("=" * 100)
         cm = build_confusion_matrix(true_labels, predicted_labels, categories)
         print(f"\nConfusion Matrix Shape: {cm.shape}")
         print("\nConfusion Matrix (first 10x10):")
@@ -258,9 +258,9 @@ if __name__ == "__main__":
         assessment = assess_reliability(accuracy, metrics, categories)
         print(assessment)
         
-        print("\n" + "=" * 80)
+        print("\n" + "=" * 100)
         print("Evaluation completed!")
-        print("=" * 80)
+        print("=" * 100)
         
     except FileNotFoundError:
         print(f"Error: Could not find CSV file at {csv_path}")

@@ -22,9 +22,5 @@ Run the script:
 python scripte/levenshtein_distance.py
 ```
 
-## Implementation Details
-- **Algorithm**: Dynamic programming approach with O(n·m) time complexity
-- **Complexity Analysis**: Confirms linear relationship between time and string length product (n·m)
-
 ## Note
 Scikit-learn is **not authorized** for this assignment. All calculations are implemented manually.

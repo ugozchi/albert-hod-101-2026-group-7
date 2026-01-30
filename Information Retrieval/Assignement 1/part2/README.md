@@ -30,10 +30,5 @@ Run the script:
 python scripte/cosine_similarity_search.py
 ```
 
-## Implementation Details
-- **Cosine Similarity Formula**: `cos(θ) = (A · B) / (||A|| * ||B||)`
-- The script imports and reuses all preprocessing and TF-IDF functions from Part 1
-- Only the cosine similarity calculation and search logic are new in this part
-
 ## Note
 Scikit-learn is **not authorized** for this assignment. All calculations are implemented manually.
