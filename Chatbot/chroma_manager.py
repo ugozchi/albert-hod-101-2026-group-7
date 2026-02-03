@@ -76,7 +76,7 @@ def create_collection(documents: list, metadatas: list, ids: list):
     # Delete existing collection if exists
     try:
         client.delete_collection(name=COLLECTION_NAME)
-        print(f"🗑️ Deleted existing collection '{COLLECTION_NAME}'")
+        print(f"Deleted existing collection '{COLLECTION_NAME}'")
     except:
         pass
     
@@ -99,7 +99,7 @@ def create_collection(documents: list, metadatas: list, ids: list):
             metadatas=batch_metas,
             ids=batch_ids
         )
-        print(f"✅ Added batch {i // batch_size + 1}: {len(batch_docs)} chunks")
+        print(f"Added batch {i // batch_size + 1}: {len(batch_docs)} chunks")
     
     return collection
 

@@ -1,161 +1,202 @@
 # 🎭 Othello RAG Chatbot
 
-A Retrieval-Augmented Generation (RAG) chatbot that answers questions about Shakespeare's **Othello** using ChromaDB for vector storage and LM Studio (Mistral 7B / DeepSeek) for text generation.
+Un chatbot conversationnel intelligent basé sur la pièce *Othello* de Shakespeare, utilisant la technique **RAG** (Retrieval-Augmented Generation) pour fournir des réponses précises et contextuelles.
 
-## 📋 Features
+## 📋 Table des matières
 
-- 💬 **Interactive Chat**: Ask questions about Othello in natural language
-- 🔍 **Semantic Search**: Find relevant passages using ChromaDB vector search
-- 🔄 **Query Rewriting**: Generates multiple query variants for better recall
-- 🤖 **Model Choice**: Switch between Mistral 7B and DeepSeek models
-- 📚 **Source Display**: See which passages were used to generate answers
+- [Description](#-description)
+- [Fonctionnalités](#-fonctionnalités)
+- [Prérequis](#-prérequis)
+- [Installation](#-installation)
+- [Utilisation](#-utilisation)
+- [Architecture](#-architecture)
+- [Stack technique](#-stack-technique)
 
-## 🛠️ Installation
+---
 
-### 1. Clone the repository
+## 📖 Description
 
-```bash
-git clone <your-repo-url>
-cd othello_rag
-```
+Ce projet combine une **base de données vectorielle** (ChromaDB) avec un **modèle de langage local** (LM Studio) pour créer un assistant capable de répondre à des questions sur la pièce *Othello* en s'appuyant sur le texte original.
 
-### 2. Create a virtual environment (recommended)
 
-```bash
-python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
-```
+## ✨ Fonctionnalités
 
-### 3. Install dependencies
+- 💬 **Interface de chat interactive**
+- 🔍 **Recherche sémantique** dans le texte d'Othello
+- 🔄 **Reformulation automatique** des questions pour améliorer la recherche
+- 📚 **Sources citées** pour chaque réponse
+- 🤖 **Support multi-modèles** via LM Studio
 
-```bash
-pip install -r requirements.txt
-```
+---
 
-### 4. Add the Othello text
+## 🔧 Prérequis
 
-Create a `source` folder and add the Othello text:
+### Logiciels requis
 
-```bash
-mkdir source
-```
+- **Python 3.8+** (compatible Python 3.13)
+- **Git Bash** (Windows) ou terminal Unix (macOS/Linux)
+- **LM Studio** ([Télécharger ici](https://lmstudio.ai/))
 
-Download the plain text version of Othello from Project Gutenberg:
-- URL: https://www.gutenberg.org/ebooks/1531
-- Save as `source/Othello.txt`
+### Modèles LLM recommandés
 
-### 5. Create the vector database
+Téléchargez et chargez dans LM Studio l'un de ces modèles :
+- Mistral 3B/7B
+- Llama 2/3
+- Phi-3
+- Tout modèle compatible OpenAI API
 
-```bash
-python create_vector_db.py
-```
+---
 
-### 6. Set up LM Studio
+## 📦 Installation
 
-1. Download and install [LM Studio](https://lmstudio.ai/)
-2. Download models:
-   - **Mistral 7B Instruct**: `mistralai/Mistral-7B-Instruct-v0.2`
-   - **DeepSeek**: Your preferred DeepSeek model
-3. Load a model in LM Studio
-4. Start the local server (Developer tab → Start Server)
-
-### 7. Run the application
+### 1. Cloner le projet
 
 ```bash
-streamlit run main.py
+git clone <votre-repo>
+cd othello-rag
 ```
 
-## 📁 Project Structure
+### 2. Rendre le script exécutable
 
-```
-othello_rag/
-├── main.py                   # Main Streamlit entry point
-├── create_vector_db.py       # Script to create ChromaDB database
-├── chroma_manager.py         # ChromaDB operations module
-├── source/
-│   └── Othello.txt           # Othello text from Gutenberg
-├── pages/
-│   ├── 1_🏠_Home.py          # Home page with overview
-│   ├── 2_💬_Chat.py          # Chat interface
-│   └── 3_⚙️_Model.py         # Model selection & configuration
-├── chroma_db/                # ChromaDB storage (auto-created)
-├── requirements.txt          # Python dependencies
-└── README.md                 # This file
-```
-
-## 🚀 Usage
-
-### Home Page
-- View application overview
-- Check database status
-- See example questions
-
-### Chat Page
-- Enter questions about Othello
-- Toggle query rewriting
-- View retrieved sources
-- See conversation history
-
-### Model Page
-- **Select model**: Choose between Mistral 7B and DeepSeek
-- **Configure connection**: Set LM Studio URL
-- **Adjust parameters**: Temperature and max tokens
-- **Test connection**: Verify LM Studio is working
-
-## ⚙️ Configuration
-
-### Default Settings
-
-| Setting | Default Value |
-|---------|---------------|
-| LM Studio URL | `http://localhost:1234/v1` |
-| Default Model | Mistral 7B Instruct |
-| Temperature | `0.7` |
-| Max Tokens | `800` |
-| Query Rewriting | Enabled |
-
-### Available Models
-
-| Model | Description |
-|-------|-------------|
-| **Mistral 7B Instruct** | Fast, efficient for general Q&A |
-| **DeepSeek** | Alternative for comparison |
-
-## 📝 Example Questions
-
-- "Who is Iago and what are his motivations?"
-- "Describe the relationship between Othello and Desdemona"
-- "What role does the handkerchief play in the story?"
-- "How does jealousy drive the plot of Othello?"
-- "What happens in the final scene of the play?"
-
-## 🐛 Troubleshooting
-
-### "Vector database not found"
 ```bash
-python create_vector_db.py
+chmod +x start.sh
 ```
 
-### "Connection failed" to LM Studio
-1. Ensure LM Studio is running
-2. Verify a model is loaded
-3. Check the local server is started
-4. Verify the URL (default: `http://localhost:1234/v1`)
+### 3. Lancer le script de démarrage
 
-### Model not responding correctly
-- Go to **Model** page
-- Click "📋 List Models" to see available model IDs
-- Update the model ID in Advanced settings if needed
+```bash
+./start.sh
+```
 
-## 📦 Dependencies
+**Ce script automatique va :**
+1. ✅ Créer un environnement virtuel Python (`.venv`)
+2. ✅ Installer toutes les dépendances (`requirements.txt`)
+3. ✅ Générer la base de données vectorielle (`create_db.py`)
 
-- `streamlit` - Web application framework
-- `chromadb` - Vector database
-- `sentence-transformers` - Embedding generation
-- `openai` - LM Studio API client
-- `numpy` - Numerical operations
-- `requests` - HTTP requests
+---
 
-## 📄 License
+## 🚀 Utilisation
 
-MIT License
+### Démarrer l'application
+
+1. **Lancer LM Studio**
+   - Ouvrir l'application
+   - Aller dans **Developer → Start Server**
+   - Vérifier que le serveur tourne sur `http://localhost:1234`
+
+2. **Lancer le chatbot**
+
+```bash
+streamlit run app.py
+```
+
+3. **Utiliser l'interface**
+   - Rendez-vous sur `http://localhost:8501`
+   - Vérifiez le statut dans la sidebar (✅ modèle chargé, ✅ base vectorielle prête)
+   - Allez dans l'onglet **💬 Chat**
+   - Posez vos questions !
+
+---
+
+## 🏗️ Architecture
+
+```
+┌─────────────┐
+│   User      │
+│  Question   │
+└──────┬──────┘
+       │
+       ▼
+┌─────────────────────────────┐
+│  Query Rewriting (optional) │ ← Génère des variantes
+└──────┬──────────────────────┘
+       │
+       ▼
+┌─────────────────────────────┐
+│   ChromaDB Search           │ ← Recherche sémantique
+│   (sentence-transformers)   │
+└──────┬──────────────────────┘
+       │
+       ▼
+┌─────────────────────────────┐
+│   Context Augmentation      │ ← Top 5 chunks pertinents
+└──────┬──────────────────────┘
+       │
+       ▼
+┌─────────────────────────────┐
+│   LM Studio (Local LLM)     │ ← Génération de réponse
+└──────┬──────────────────────┘
+       │
+       ▼
+┌─────────────────────────────┐
+│   Answer + Sources          │
+└─────────────────────────────┘
+```
+
+---
+
+## 🛠️ Stack technique
+
+| Composant | Technologie |
+|-----------|-------------|
+| **Frontend** | Streamlit |
+| **Vector DB** | ChromaDB |
+| **Embeddings** | sentence-transformers (`all-MiniLM-L6-v2`) |
+| **LLM** | LM Studio (API OpenAI-compatible) |
+| **Chunking** | Découpage par scène |
+| **HTTP Client** | httpx |
+
+---
+
+## 📁 Structure du projet
+
+```
+othello-rag/
+├── app.py                  # Application Streamlit principale
+├── create_db.py           # Script de création de la base vectorielle
+├── chroma_manager.py      # Gestion ChromaDB
+├── start.sh               # Script de démarrage automatisé
+├── requirements.txt       # Dépendances Python
+├── .venv/                 # Environnement virtuel (généré)
+└── chroma_db/             # Base de données vectorielle (générée)
+```
+
+---
+
+## 🐛 Dépannage
+
+### Problème : "Aucun modèle chargé"
+
+**Solution :**
+1. Ouvrir LM Studio
+2. Charger un modèle dans l'onglet **Chat**
+3. Activer le serveur : **Developer → Start Server**
+4. Rafraîchir l'application Streamlit
+
+### Problème : "Base vectorielle manquante"
+
+**Solution :**
+```bash
+source .venv/bin/activate  # ou .venv\Scripts\activate sur Windows
+python create_db.py
+```
+
+### Problème : Erreurs de permission sur `start.sh`
+
+**Solution :**
+```bash
+chmod +x start.sh
+```
+
+---
+
+## 📄 Licence
+
+Ce projet est à usage éducatif.
+
+---
+
+## 🙏 Remerciements
+
+- Shakespeare pour *Othello* 🎭
+- La communauté open-source pour les outils utilisés

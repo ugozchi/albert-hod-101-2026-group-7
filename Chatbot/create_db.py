@@ -35,7 +35,7 @@ def load_othello_text(filepath: str) -> str:
     """
     if not os.path.exists(filepath):
         raise FileNotFoundError(
-            f"❌ File '{filepath}' not found.\n"
+            f"File '{filepath}' not found.\n"
             f"Please download Othello from https://www.gutenberg.org/ "
             f"and save it as '{filepath}'"
         )
@@ -43,7 +43,7 @@ def load_othello_text(filepath: str) -> str:
     with open(filepath, "r", encoding="utf-8") as f:
         text = f.read()
     
-    print(f"📖 Loaded {len(text)} characters from {filepath}")
+    print(f"Loaded {len(text)} characters from {filepath}")
     return text
 
 
@@ -169,45 +169,45 @@ def create_database():
     4. Creates embeddings and stores in ChromaDB
     """
     print("=" * 60)
-    print("🎭 Othello RAG - Vector Database Generator")
+    print("🎭Othello RAG - Vector Database Generator")
     print("=" * 60)
     
     # Load text
-    print("\n📚 Loading Othello text...")
+    print("\nLoading Othello text...")
     raw_text = load_othello_text(OTHELLO_FILE)
     
     # Check if file has content
     if len(raw_text) == 0:
-        print("❌ ERROR: The file is empty!")
-        print(f"   Please download Othello from: https://www.gutenberg.org/cache/epub/1531/pg1531.txt")
-        print(f"   And save it to: {OTHELLO_FILE}")
+        print("ERROR: The file is empty!")
+        print(f"Please download Othello from: https://www.gutenberg.org/cache/epub/1531/pg1531.txt")
+        print(f"And save it to: {OTHELLO_FILE}")
         return
     
     # Clean text
-    print("🧹 Cleaning text...")
+    print("Cleaning text...")
     cleaned_text = clean_text(raw_text)
     print(f"   Cleaned text: {len(cleaned_text)} characters")
     
     if len(cleaned_text) == 0:
-        print("❌ ERROR: Text is empty after cleaning!")
+        print("ERROR: Text is empty after cleaning!")
         return
     
     # Extract scenes
-    print("🎬 Extracting scenes...")
+    print("Extracting scenes...")
     scenes = extract_scenes(cleaned_text)
     print(f"   Found {len(scenes)} scenes")
     
     # Chunk text
-    print(f"✂️ Chunking text (size={CHUNK_SIZE}, overlap={CHUNK_OVERLAP})...")
+    print(f"Chunking text (size={CHUNK_SIZE}, overlap={CHUNK_OVERLAP})...")
     chunks = split_into_chunks(cleaned_text, CHUNK_SIZE, CHUNK_OVERLAP)
     print(f"   Created {len(chunks)} chunks")
     
     if len(chunks) == 0:
-        print("❌ ERROR: No chunks created!")
+        print("ERROR: No chunks created!")
         return
     
     # Prepare data for ChromaDB
-    print("📦 Preparing data for ChromaDB...")
+    print("Preparing data for ChromaDB...")
     documents = []
     metadatas = []
     ids = []
@@ -228,22 +228,20 @@ def create_database():
         ids.append(f"othello_chunk_{i:04d}")
     
     # Create ChromaDB collection
-    print("\n🧠 Creating ChromaDB collection with embeddings...")
+    print("\nCreating ChromaDB collection with embeddings...")
     print("   (This may take a moment...)")
     
     create_collection(documents, metadatas, ids)
     
     # Verify
-    print("\n✅ Database created successfully!")
+    print("\nDatabase created successfully!")
     stats = get_collection_stats()
     if stats:
         print(f"   Collection: {stats['name']}")
         print(f"   Total chunks: {stats['count']}")
     
-    print("\n" + "=" * 60)
     print("🎉 Done! You can now run the Streamlit app.")
-    print("   Command: streamlit run main.py")
-    print("=" * 60)
+    print("   Command: streamlit run app.py")
 
 
 if __name__ == "__main__":

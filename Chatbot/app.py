@@ -58,7 +58,7 @@ def call_llm(messages: list) -> str:
     """Call LM Studio API."""
     models = get_loaded_models()
     if not models:
-        return "❌ Aucun modèle chargé. Ouvre LM Studio et charge un modèle."
+        return "Aucun modèle chargé. Ouvre LM Studio et charge un modèle."
     
     model_id = st.session_state.selected_model or models[0]
     if model_id not in models:
@@ -77,10 +77,10 @@ def call_llm(messages: list) -> str:
                 }
             )
             if r.status_code != 200:
-                return f"❌ Erreur {r.status_code}: {r.text[:200]}"
+                return f"Erreur {r.status_code}: {r.text[:200]}"
             return r.json()["choices"][0]["message"]["content"]
     except Exception as e:
-        return f"❌ Erreur: {e}"
+        return f"Erreur: {e}"
 
 
 def rewrite_query(query: str) -> list:
@@ -140,14 +140,12 @@ with st.sidebar:
         )
         st.success(f"✅ {len(models)} model(s)")
     else:
-        st.error("❌ LM Studio not connected")
+        st.error("LM Studio not connected")
         st.caption("Launch LM Studio & load a model")
     
     st.divider()
     
     st.session_state.enable_rewriting = st.checkbox("🔄 Query Rewriting", st.session_state.enable_rewriting)
-    st.session_state.temperature = st.slider("🌡️ Temp", 0.0, 2.0, st.session_state.temperature, 0.1)
-    st.session_state.max_tokens = st.slider("📝 Tokens", 100, 1500, st.session_state.max_tokens, 100)
     
     st.divider()
     
@@ -172,26 +170,101 @@ tab1, tab2, tab3 = st.tabs(["🏠 Home", "💬 Chat", "🤖 Model"])
 
 # HOME
 with tab1:
-    st.markdown("*Ask questions about Shakespeare's Othello*")
+    st.markdown("### 🎭 Othello RAG Chatbot")
+    st.caption("*Un assistant conversationnel enrichi par Retrieval-Augmented Generation*")
     
+    st.divider()
+    
+    # === STATUS ===
     col1, col2 = st.columns(2)
-    col1.metric("📊 DB", f"{stats['count']} chunks" if stats else "❌")
-    col2.metric("🤖 LM Studio", f"{len(models)} model(s)" if models else "❌")
+    with col1:
+        if stats:
+            st.metric("📊 Base vectorielle", f"{stats['count']} chunks", delta="Prêt")
+        else:
+            st.metric("📊 Base vectorielle", "Non créée", delta="❌")
+    
+    with col2:
+        if models:
+            st.metric("🤖 LM Studio", f"{len(models)} modèle(s)", delta="Connecté")
+        else:
+            st.metric("🤖 LM Studio", "Non connecté", delta="❌")
+    
+    st.divider()
+    
+    # === EXPLANATION RAG ===
+    st.markdown("### 🧠 Comment ça marche ?")
+    
+    st.markdown("""
+    Cette application utilise **RAG** (Retrieval-Augmented Generation), une technique qui combine :
+    
+    - **🔍 Recherche sémantique** : Trouve les passages pertinents dans Othello
+    - **🤖 Génération LLM** : Utilise ces passages pour répondre précisément
+    
+    **Avantages :**
+    - ✅ Réponses factuelles basées sur le texte original
+    - ✅ Pas d'hallucinations (le LLM s'appuie sur les sources)
+    - ✅ Sources citées et vérifiables
+    """)
+    
+    st.divider()
+
+     # === TECH STACK ===
+    with st.expander("🛠️ Stack technique"):
+        st.markdown("""
+        - **Frontend** : Streamlit
+        - **Vector DB** : ChromaDB
+        - **Embeddings** : sentence-transformers (all-MiniLM-L6-v2)
+        - **LLM** : LM Studio (local, modèle chargé manuellement)
+        - **Chunking** : Par scène (voir `create_db.py`)
+        """)
+    
+    st.divider()
+    
+    # === QUICK START ===
+    st.markdown("### 🚀 Quick Start")
     
     if stats and models:
-        st.success("✅ Ready! Go to **Chat**")
+        st.success("✅ **Tout est prêt !** Passe à l'onglet **💬 Chat**")
     else:
-        st.warning("⚠️ Start LM Studio + load model + check DB")
+        st.warning("⚠️ Configuration incomplète")
+        
+        if not stats:
+            st.error("**📊 Base vectorielle manquante**")
+            st.code("python create_db.py", language="bash")
+        
+        if not models:
+            st.error("**🤖 LM Studio non connecté**")
+            st.markdown("""
+            1. Lance **LM Studio**
+            2. Charge un modèle (ex: Mistral, Llama)
+            3. Démarre le serveur : **Developer → Start Server**
+            4. Reviens ici et rafraîchis
+            """)
     
-    st.markdown("### 💡 Examples\n- *Who is Iago?*\n- *What is the handkerchief?*")
+    st.divider()
+    
+    # === EXAMPLE QUESTIONS ===
+    st.markdown("### 💡 Exemples de questions")
+    
+    examples = [
+        "Who is Iago and what is his role?",
+        "What is the significance of the handkerchief?",
+        "How does Othello's character evolve?",
+        "What are the main themes of the play?"
+    ]
+    
+    cols = st.columns(2)
+    for i, ex in enumerate(examples):
+        with cols[i % 2]:
+            st.info(f"💬 *{ex}*")
 
 # CHAT
 with tab2:
     if not stats:
-        st.error("❌ Run `python create_db.py`")
+        st.error("Run `python create_db.py`")
         st.stop()
     if not models:
-        st.error("❌ Start LM Studio & load a model")
+        st.error("Start LM Studio & load a model")
         st.stop()
     
     for h in st.session_state.chat_history:
@@ -226,11 +299,11 @@ with tab3:
     st.subheader("LM Studio Status")
     
     if models:
-        st.success(f"✅ Connected - {len(models)} model(s)")
+        st.success(f"Connected - {len(models)} model(s)")
         for m in models:
             st.code(m)
     else:
-        st.error("❌ Not connected")
+        st.error("Not connected")
     
     if st.button("🔄 Refresh"):
         st.rerun()
