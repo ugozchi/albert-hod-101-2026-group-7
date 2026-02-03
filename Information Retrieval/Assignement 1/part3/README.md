@@ -22,5 +22,8 @@ Run the script:
 python scripte/levenshtein_distance.py
 ```
 
+## Results
+We ran the complexity analysis on synthetic strings of lengths 100, 500, 1000, and 2000. The regression of runtime vs. string length product (n·m) gives an R² of about 0.9998, so the relationship is almost perfectly linear. The p-value is very small (< 0.05), so the link between time and n and m is statistically significant, this confirming that the Levenshtein implementation behaves as expected with **O(n*m)** * complexity.
+
 ## Note
 Scikit-learn is **not authorized** for this assignment. All calculations are implemented manually.
