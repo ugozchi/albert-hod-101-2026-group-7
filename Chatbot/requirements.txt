@@ -1,0 +1,19 @@
+# Core
+streamlit==1.33.0
+python-dotenv==1.0.1
+
+# Vector DB & Embeddings
+chromadb==0.4.24
+sentence-transformers==2.6.1
+
+# NumPy - version binaire Windows compatible
+numpy==1.26.4
+
+# LLM Client
+openai==1.14.0
+
+# LM Studio SDK (optionnel - peut échouer)
+lmstudio
+
+# HTTP
+requests==2.31.0

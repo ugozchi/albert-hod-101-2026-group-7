@@ -1,0 +1,11 @@
+[browser]
+gatherUsageStats = false
+
+[client]
+showSidebarNavigation = true
+
+[server]
+headless = true
+
+[ui]
+hideTopBar = false
