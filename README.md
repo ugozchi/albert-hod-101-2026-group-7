@@ -1,7 +1,7 @@
 # albert-hod-101-2026-group-7
 
 **Head of Data 101 – Group 7**  
-Students: Thomas ALAPHILIPPE, Feliz, Nico, Ugo
+Students: Thomas, Feliz, Nico, Ugo, Enzo
 
 ---
 
